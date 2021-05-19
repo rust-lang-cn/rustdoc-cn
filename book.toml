@@ -1,0 +1,9 @@
+[book]
+title = "rustdoc 手册"
+description = "rustdoc 手册详细介绍了如何使用 rustdoc 命令或 cargo doc 来生成漂亮的 crate 文档，发布 crate 前很有必要熟悉 rustdoc 的相关内容。"
+authors = ["The Rust Project Developers"]
+src = "src"
+
+[output.html]
+# English git-repository-url = "https://github.com/rust-lang/rust/tree/master/src/doc/rustdoc"
+git-repository-url = "https://github.com/rust-lang-cn/rustdoc-cn"

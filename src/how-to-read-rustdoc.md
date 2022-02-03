@@ -1,107 +1,57 @@
-# How to read rustdoc output
+# 如何阅读 rustdoc 的输出
 
-Rustdoc's HTML output includes a friendly and useful navigation interface which
-makes it easier for users to navigate and understand your code.
-This chapter covers the major features of that interface,
-and is a great starting point for documentation authors and users alike.
+Rustdoc 的 HTML 文件包含了有用的跳转入口，便于用户跳转理解你的代码。本章会覆盖入口的主要特性，同时也是良好的文档作者和用户的开端。
 
-## Structure
+## 结构
 
-The `rustdoc` output is divided into three sections.
-Along the left side of each page is a quick navigation bar,
-which shows contextual information about the current entry.
-The rest of the page is taken up by the search interface at the top
-and the documentation for the current item below that.
+`rustdoc`的输出包含三部分，左侧是整个页面的快速导航，展示了当前条目的上下文信息。页面的右侧大版面由顶部的搜索和下面的文档页面主体组成。
 
-## The Item Documentation
+## Item 文档
 
-The majority of the screen is taken up with the documentation text for the item
-currently being viewed.
-At the top is some at-a-glance info and controls:
+屏幕的主要区域展示的是 item 的文档。
 
-- the type and name of the item,
-  such as "Struct `std::time::Duration`",
-- a button to copy the item's path to the clipboard,
-  which is a clipboard item
-- a button to collapse or expand the top-level documentation for that item
-  (`[+]` or `[-]`),
-- a link to the source code (`[src]`),
-  if [configured](the-doc-attribute.html#html_no_source),
-  and present (the source may not be available if
-  the documentation was created with `cargo doc --no-deps`),
-- and the version in which the item became stable,
-  if it's a stable item in the standard library.
+顶端是一览信息：
+- item 的类型和名称，比如 "Struct `std::time::Duration`",
+- 复制 crate 路径的按钮
+- 展开和收起 item 顶层文档的按钮 (`[+]` or `[-]`),
+- 如果 [configured](the-doc-attribute.html#html_no_source), 并且可以展示（如果文档创建通过 `cargo doc --no-deps` 源码可能是无效的），
+  会有源码的连接 (`[src]`),
+- 如果 item 是标准库，会展示 item 稳定的版本
 
-Below this is the main documentation for the item,
-including a definition or function signature if appropriate,
-followed by a list of fields or variants for Rust types.
-Finally, the page lists associated functions and trait implementations,
-including automatic and blanket implementations that `rustdoc` knows about.
+下面是 item 的主要文档，包括函数签名，Rust 类型的 fields 列表或者 variants。最后页面列出关联的函数以及 trait 实现，包括 `rustdoc` 知道的自动和空白实现。
 
-### Navigation
+### 导航
 
-Subheadings, variants, fields, and many other things in this documentation
-are anchors and can be clicked on and deep-linked to,
-which is a great way to communicate exactly what you're talking about.
-The typograpical character "§" appears next to lines with anchors on them
-when hovered or given keyboard focus.
+subheadings， variants，fields 和文档中很多元素都是锚，可以被链接，这是可以准确传递你表达的好方法。当悬停或给定键盘焦点时，印刷符号"§" 出现在带有锚点的行旁边。
 
-## The Navigation Bar
+## 导航栏
 
-For example, when looking at documentation for the crate root,
-it shows all the crates documented in the documentation bundle,
-and quick links to the modules, structs, traits, functions, and macros available
-from the current crate.
-At the top, it displays a [configurable logo](the-doc-attribute.html#html_logo_url)
-alongside the current crate's name and version,
-or the current item whose documentation is being displayed.
+比如，当查看 crate 根文档的时候，会展示所有的 crate 文档的 modules，structs，traits，functions，macros 的快速链接。
+顶部，在当前 crate 名称和版本旁边或者当前 item 旁边展示 [configurable logo](the-doc-attribute.html#html_logo_url)。
 
-## The Theme Picker and Search Interface
+## 主题选择和搜索栏
 
-When viewing `rustdoc`'s output in a browser with JavaScript enabled,
-a dynamic interface appears at the top of the page.
-To the left is the theme picker, denoted with a paint-brush icon,
-and the search interface, help screen, and options appear to the right of that.
+当在支持 JavaScript 的浏览器中打开 `rustdoc` 的输出时，页面顶部会出现一个接口，左侧是主题选择（一个画笔图标），搜索栏，帮助提示和配置按钮
+【译者注：主题选择已经在配置设置中】
 
-### The Theme Picker
+### 主题选择
 
-Clicking on the theme picker provides a list of themes -
-by default `ayu`, `light`, and `dark` -
-which are available for viewing.
+点击主题选择会列出可选主题，默认是 `ayu`, `light`, and `dark`。
 
-### The Search Interface
+### 搜索栏
 
-Typing in the search bar instantly searches the available documentation for
-the string entered with a fuzzy matching algorithm that is tolerant of minor
-typos.
+在搜索栏输入内容，会模糊匹配搜索当前的文档
 
-By default, the search results give are "In Names",
-meaning that the fuzzy match is made against the names of items.
-Matching names are shown on the left, and the first few words of their
-descriptions are given on the right.
-By clicking an item, you will navigate to its particular documentation.
+默认搜索结果显示按照名称的结果，意味着模糊匹配 item 的名称，匹配的名称显示在左侧，如果有描述会显示在右侧，点击 item，你会跳转到对应的页面
 
-There are two other sets of results, shown as tabs in the search results pane.
-"In Parameters" shows matches for the string in the types of parameters to
-functions, and "In Return Types" shows matches in the return types of functions.
-Both are very useful when looking for a function whose name you can't quite
-bring to mind when you know the type you have or want.
+还有两种结果，按照参数搜索，展示函数参数中类型的匹配结果，按返回值搜索，展示函数返回值类型的搜索结构。这两种搜索结果在你不知道函数名称，但是知道你想要的类型时非常有用。
 
-When typing in the search bar, you can prefix your search term with a type
-followed by a colon (such as `mod:`) to restrict the results to just that
-kind of item. (The available items are listed in the help popup.)
+当在搜索栏输入时，可以通过冒号前缀来限制搜索结果的类型（比如`mod:`）
 
-### Shortcuts
+### 快捷键
 
-Pressing `S` while focused elsewhere on the page will move focus to the
-search bar, and pressing `?` shows the help screen,
-which includes all these shortcuts and more.
-Pressing `T` focuses the theme picker.
+按下`S`焦点会移动到搜索框，按下`?`会展示帮助界面，其中包括所有快捷键以及说明。按下`T`焦点移动到主题选择。【译者注：主题选择通过搜索栏的右侧 setting 按钮唤出】
 
-When the search results are focused,
-the left and right arrows move between tabs and the up and down arrows move
-among the results.
-Pressing the enter or return key opens the highlighted result.
+当焦点在搜索结果时，左右箭头可以切换搜索的 tab，上下箭头可以移动关注的搜索结果。按下回车键可以打开高亮的结果。
 
-When looking at the documentation for an item, the plus and minus keys expand
-and collapse all sections in the document.
+当焦点在 item 文档时，加号和减号可以展开收起文档的小结

@@ -1,6 +1,7 @@
 # The Rustdoc Book
 
 - [What is rustdoc?](what-is-rustdoc.md)
+- [How to read rustdoc output](how-to-read-rustdoc.md)
 - [How to write documentation](how-to-write-documentation.md)
 - [What to include (and exclude)](what-to-include.md)
 - [Command-line arguments](command-line-arguments.md)
@@ -10,5 +11,6 @@
 - [Lints](lints.md)
 - [Advanced features](advanced-features.md)
 - [Unstable features](unstable-features.md)
+- [Website features](website-features.md)
 - [Passes](passes.md)
 - [References](references.md)

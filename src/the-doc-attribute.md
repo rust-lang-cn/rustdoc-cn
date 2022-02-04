@@ -32,7 +32,7 @@
 
 另一个有用的场景是引入外部文件：
 
-```rust,no_run
+```rust,no_run,ignore
 #[doc = include_str!("../README.md")]
 # fn f() {}
 ```

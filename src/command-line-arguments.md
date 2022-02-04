@@ -1,21 +1,20 @@
 # Command-line arguments
 
-Here's the list of arguments you can pass to `rustdoc`:
+这里是可以传递给 `rustdoc` 的参数列表：
+
 
 ## `-h`/`--help`: help
 
-Using this flag looks like this:
+这样使用：
 
 ```bash
 $ rustdoc -h
 $ rustdoc --help
 ```
+这会展示`rustdoc`内置的帮助，包含了大量可用的命令行 flags。
 
-This will show `rustdoc`'s built-in help, which largely consists of
-a list of possible command-line flags.
+有些 flags 是未稳定的；这个页面只会只包好稳定的参数，`--help`会包含所有的。
 
-Some of `rustdoc`'s flags are unstable; this page only shows stable
-options, `--help` will show them all.
 
 ## `-V`/`--version`: version information
 

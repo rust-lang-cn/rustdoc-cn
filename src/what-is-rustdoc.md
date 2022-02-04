@@ -76,7 +76,7 @@ dependency=<path>/docs/target/debug/deps
 
 ## Outer 和 inner 文档
 
-`///` 符号用来对下面一个 item 生成文档，所以称为 outer 文档。还有符号`//!`，用来生成 item 内部的文档，也叫做 inner 文档，通常用来对整个 crate 生成文档，因为是 crate 的根，没有 item 在前面。所以为了生成整个 crate 的文档，你需要这样用 `//!`：
+`///` 语法用来对下面一个 item 生成文档，所以称为 outer 文档。还有语法`//!`，用来生成 item 内部的文档，也叫做 inner 文档，通常用来对整个 crate 生成文档，因为是 crate 的根，没有 item 在前面。所以为了生成整个 crate 的文档，你需要这样用 `//!`：
 
 ``` rust
 //! This is my first rust crate

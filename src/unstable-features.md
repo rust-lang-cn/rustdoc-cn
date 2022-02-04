@@ -1,4 +1,4 @@
-# Unstable features
+# 不稳定特性
 
 Rustdoc is under active development, and like the Rust compiler, some features are only available
 on nightly releases. Some of these features are new and need some more testing before they're able to be

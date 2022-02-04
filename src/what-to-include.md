@@ -1,17 +1,14 @@
-# What to include (and exclude)
+# 什么包含（和排除）
 
-It is easy to say everything must be documented in a project and often times
-that is correct, but how can we get there, and are there things that don't
-belong?
+说起来项目中的所有内容都需要有文档简单正确，但是我们如何才能做到，以及是否还有内容没有文档？
 
-At the top of the `src/lib.rs` or `main.rs` file in your binary project, include
-the following attribute:
+在顶层的 `src/lib.rs` 或者你的二进制项目 `main.rs` 文件中，包含下面的属性：
 
 ```rust
 #![warn(missing_docs)]
 ```
 
-Now run `cargo doc` and examine the output.  Here's a sample:
+现在运行 `cargo doc`，检查输出，这是一个例子：
 
 ```text
  Documenting docdemo v0.1.0 (/Users/username/docdemo)
@@ -36,29 +33,17 @@ warning: 1 warning emitted
     Finished dev [unoptimized + debuginfo] target(s) in 2.96s
 ```
 
-As a library author, adding the lint `#![deny(missing_docs)]` is a great way to
-ensure the project does not drift away from being documented well, and
-`#![warn(missing_docs)]` is a good way to move towards comprehensive
-documentation.  In addition to docs, `#![deny(missing_doc_code_examples)]`
-ensures each function contains a usage example.  In our example above, the
-warning is resolved by adding crate level documentation.
+作为一个库作者，加入 lint `#![deny(missing_docs)]` 是一个确保项目拥有良好文档的好方法，`#![warn(missing_docs)]` 是通向良好文档的好方法。除了文档，`#![deny(missing_doc_code_examples)]` 确保每个函数有一个使用示例。在我们上面的例子中，添加 crate 级别的 lint 来警告。
 
-There are more lints in the upcoming chapter [Lints][rustdoc-lints].
+下面的章节有更多 lints 的细节 [Lints][rustdoc-lints].
 
-## Examples
+## 例子
 
-Of course this is contrived to be simple, but part of the power of documentation
-is showing code that is easy to follow, rather than being realistic.  Docs often
-take shortcuts with error handling because examples can become complicated to
-follow with all the necessary set up required for a simple example.
+当然这很简单，但是文档的力量之一是展示的代码易于理解，而不是生产级别。文档通常会忽略错误处理，因为例子需要排除一些不必要的内容保持简单。
 
-`Async` is a good example of this.  In order to execute an `async` example, an
-executor needs to be available.  Examples will often shortcut this, and leave
-users to figure out how to put the `async` code into their own runtime.
+`Async` 是一个好例子。为了执行 `async` 例子，一个 executor 是需要的，例子中通常会省略它，让用户自己将 `async` 代码放到自己的运行时。
 
-It is preferred that `unwrap()` not be used inside an example, and some of the
-error handling components be hidden if they make the example too difficult to
-follow.
+最好不要在例子中使用 `unwrap()`，并且如果错误处理使得例子难以理解应该被隐藏起来。
 
 ``````text
 /// Example
@@ -68,9 +53,7 @@ follow.
 /// ```
 ``````
 
-When rustdoc wraps that in a main function, it will fail to compile because the
-`ParseIntError` trait is not implemented.  In order to help both your audience
-and your test suite, this example needs some additional code:
+当 rustdoc wrap 这些到 main 函数中，会编译错误因为 `ParseIntError` trait 没有实现。为了同时帮助读者和测试，这个例子还需要增加些额外代码：
 
 ``````text
 /// Example
@@ -83,40 +66,29 @@ and your test suite, this example needs some additional code:
 /// ```
 ``````
 
-The example is the same on the doc page, but has that extra information
-available to anyone trying to use your crate.  More about tests in the
-upcoming [Documentation tests] chapter.
+这两个例子在文档页面是相同的，但是对你 crate 的使用者有一些额外的信息。更多的文档测试内容在接下来的 [文档测试] 章节中。
 
-## What to Exclude
+## 什么被排除
 
-Certain parts of your public interface may be included by default in the output
-of rustdoc.  The attribute `#[doc(hidden)]` can hide implementation details
-to encourage idiomatic use of the crate.
+默认情况下，你的公共接口可能会默认包含在 rustdoc 输出中。`#[doc(hidden)]` 属性可以隐藏实现细节来鼓励本 crate 的惯用法。
 
-For example, an internal `macro!` that makes the crate easier to implement can
-become a footgun for users when it appears in the public documentation.  An
-internal `Error` type may exist, and `impl` details should be hidden, as
-detailed in the [API Guidelines].
+比如，一个内部的 `macro!` 使得 crate 更容易实现如果对用户暴露会使得用户困惑。一个内部的`Error`类型可能存在，并且 `impl` 细节应该被隐藏，如同 [API Guidelines] 中描述的一样。
 
-## Customizing the output
+## 自定义输出
 
-It is possible to pass a custom css file to `rustdoc` and style the
-documentation.
+传递一个自定义 css 文件给 `rustdoc` 定义文档的款式是可行的。
 
 ```bash
 rustdoc --extend-css custom.css src/lib.rs
 ```
 
-A good example of using this feature to create a dark theme is documented [on
-this blog].  Just remember, dark theme is already included in the rustdoc output
-by clicking on the paintbrush.  Adding additional options to the themes are
-as easy as creating a custom theme `.css` file and using the following syntax:
+一个良好的例子就是使用这个特性来创建本书的暗黑主题。记住，暗黑主题也包含在点击画笔的输出中。使用可选参数可以很容易使用自定义主题 `.css` 文件：
 
 ```bash
 rustdoc --theme awesome.css src/lib.rs
 ```
 
-Here is an example of a new theme, [Ayu].
+这是一个新主题 [Ayu] 的例子。
 
 [Ayu]: https://github.com/rust-lang/rust/blob/master/src/librustdoc/html/static/themes/ayu.css
 [API Guidelines]: https://rust-lang.github.io/api-guidelines/documentation.html#rustdoc-does-not-show-unhelpful-implementation-details-c-hidden

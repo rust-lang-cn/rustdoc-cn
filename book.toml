@@ -8,3 +8,4 @@ src = "src"
 additional-js = ["language.js"]
 # English git-repository-url = "https://github.com/rust-lang/rust/tree/master/src/doc/rustdoc"
 git-repository-url = "https://github.com/rust-lang-cn/rustdoc-cn"
+edit-url-template = "https://github.com/rust-lang-cn/rustdoc-cn/edit/master/{path}"

@@ -1,9 +1,8 @@
-# Linking to items by name
+# 通过名称链接 item
 
-Rustdoc is capable of directly linking to other rustdoc pages using the path of
-the item as a link. This is referred to as an 'intra-doc link'.
+Rustdoc 能够使用 item 的路径直接内部链接。这称为 'intra-doc link'。
 
-For example, in the following code all of the links will link to the rustdoc page for `Bar`:
+比如，下面的代码可以链接 `Bar` 的页面：
 
 ```rust
 /// This struct is not [Bar]
@@ -24,24 +23,20 @@ pub struct Foo4;
 pub struct Bar;
 ```
 
-Unlike normal Markdown, `[bar][Bar]` syntax is also supported without needing a
-`[Bar]: ...` reference link.
+不像常规的 markdown，`[bar][Bar]` 语法也被支持，不需要`[Bar]: ...` 链接。
 
-Backticks around the link will be stripped, so ``[`Option`]`` will correctly
-link to `Option`.
+反引号会被删除， 所以 ``[`Option`]`` 可以正确地链接到`Option`。
 
-## Valid links
+## 有效链接
 
-You can refer to anything in scope, and use paths, including `Self`, `self`, `super`, and
-`crate`. Associated items (functions, types, and constants) are supported, but [not for blanket
-trait implementations][#79682]. Rustdoc also supports linking to all primitives listed in
-[the standard library documentation](../std/index.html#primitives).
+你可以链接作用域的任何东西，使用路径，包括`Self`, `self`, `super`和
+`crate`。Associated items (functions, types, and constants) 也是支持的，但是 [不能是空的
+trait 实现][#79682]. Rustdoc 还支持 [the standard library documentation](../std/index.html#primitives) 列出的原始类型链接。
 
 [#79682]: https://github.com/rust-lang/rust/pull/79682
 
-You can also refer to items with generic parameters like `Vec<T>`. The link will
-resolve as if you had written ``[`Vec<T>`](Vec)``. Fully-qualified syntax (for example,
-`<Vec as IntoIterator>::into_iter()`) is [not yet supported][fqs-issue], however.
+你还可以链接范型参数，比如 `Vec<T>`。链接会如同你写了 ``[`Vec<T>`](Vec)``. 但是，Fully-qualified syntax（比如，
+`<Vec as IntoIterator>::into_iter()`) 还 [没有被支持][fqs-issue]。
 
 [fqs-issue]: https://github.com/rust-lang/rust/issues/74563
 
@@ -62,7 +57,7 @@ impl<T> AsyncReceiver<T> {
 }
 ```
 
-Rustdoc allows using URL fragment specifiers, just like a normal link:
+Rustdoc 允许使用 URL fragment specifiers，就如同普通的链接：
 
 ```rust
 /// This is a special implementation of [positional parameters].
@@ -71,11 +66,9 @@ Rustdoc allows using URL fragment specifiers, just like a normal link:
 struct MySpecialFormatter;
 ```
 
-## Namespaces and Disambiguators
+## Namespaces and Disambiguators（消歧义符）
 
-Paths in Rust have three namespaces: type, value, and macro. Item names must be unique within
-their namespace, but can overlap with items in other namespaces. In case of ambiguity,
-rustdoc will warn about the ambiguity and suggest a disambiguator.
+Rust 中的路径有三种命名空间：type, value 和 macro。Item name 在命名空间内必须唯一，但是可以与其他命名空间的 item 同名。在歧义的情况下，rustdoc 会警告歧义，并给出消除歧义的建议。
 
 ```rust
 /// See also: [`Foo`](struct@Foo)
@@ -87,11 +80,9 @@ struct Foo {}
 fn Foo() {}
 ```
 
-These prefixes will be stripped when displayed in the documentation, so `[struct@Foo]` will be
-rendered as `Foo`.
+这些前缀展示在文档时会被删除，所以`[struct@Foo]`会被渲染成`Foo`。
 
-You can also disambiguate for functions by adding `()` after the function name,
-or for macros by adding `!` after the macro name:
+你也可以在函数名后加上`()`和在宏名后面加上`!`消除歧义：
 
 ```rust
 /// This is different from [`foo!`]
@@ -103,11 +94,9 @@ macro_rules! foo {
 }
 ```
 
-## Warnings, re-exports, and scoping
+## 警告，re-exports, and scoping
 
-Links are resolved in the scope of the module where the item is defined, even
-when the item is re-exported. If a link from another crate fails to resolve, no
-warning is given.
+即使 item 被 re-exported，链接也在 item 定义的模块内解析。如果来自另一个 crate 的链接解析失败，不会给出警告。
 
 ```rust,edition2018
 mod inner {
@@ -118,10 +107,7 @@ mod inner {
 pub use inner::S; // the link to `f` will still resolve correctly
 ```
 
-When re-exporting an item, rustdoc allows adding additional documentation to it.
-That additional documentation will be resolved in the scope of the re-export, not
-the original, allowing you to link to items in the new crate. The new links
-will still give a warning if they fail to resolve.
+当一个 item 被 re-export，rustdoc 允许加入额外的文档。额外的文档在 re-export 的作用域中解析，允许你链接 re-export 的 item，并且如果解析失败会给出警告。
 
 ```rust
 /// See also [foo()]
@@ -129,15 +115,10 @@ pub use std::process::Command;
 
 pub fn foo() {}
 ```
+这对于过程宏非常有用，过程宏必须定义在自己的 crate 中。
 
-This is especially useful for proc-macros, which must always be defined in their own dedicated crate.
+注意：因为 `macro_ruls!` 宏的作用域是整个 Rust，`macro_rules!` 的 intra-doc 链接在 [relative to the crate root][#72243] 解析，而不是定义的模块内。
 
-Note: Because of how `macro_rules!` macros are scoped in Rust, the intra-doc links of a
-`macro_rules!` macro will be resolved [relative to the crate root][#72243], as opposed to the
-module it is defined in.
-
-If links do not look 'sufficiently like' an intra-doc link, they will be ignored and no warning
-will be given, even if the link fails to resolve. For example, any link containing `/` or `[]`
-characters will be ignored.
+如果链接看起来不像是 intra-doc 链接，它们会被忽略并且不会生成警告，即使链接解析失败。比如，任何包含了 `/` 或者 `[]`字符的链接都被忽略。
 
 [#72243]: https://github.com/rust-lang/rust/issues/72243

@@ -1,8 +1,6 @@
 # rustdoc 手册
 
-> 本书正在翻译进行中，欢迎加入翻译项目组一起翻译。—— 2021.05.19
-
-这是 《rustdoc 手册》中文版，翻译自 《rustdoc Book》。
+这是《rustdoc 手册》中文版，翻译自《rustdoc Book》。
 
 ## 构建
 

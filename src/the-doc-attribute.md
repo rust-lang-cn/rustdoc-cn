@@ -1,11 +1,8 @@
-# The `#[doc]` attribute
+# `#[doc]` 属性
 
-The `#[doc]` attribute lets you control various aspects of how `rustdoc` does
-its job.
+`#[doc]` 属性可以让你控制 `rustdoc` 工作的各个方面。
 
-The most basic function of `#[doc]` is to handle the actual documentation
-text. That is, `///` is syntax sugar for `#[doc]`. This means that these two
-are the same:
+`#[doc]` 最基本的作用就是处理文档内容。就是说，`///` 就是 `#[doc]` 的语法糖。下面的两行注释是一样的：
 
 ```rust,no_run
 /// This is a doc comment.
@@ -13,11 +10,9 @@ are the same:
 # fn f() {}
 ```
 
-(Note the leading space in the attribute version.)
+（请注意属性版本的开始的空格。）
 
-In most cases, `///` is easier to use than `#[doc]`. One case where the latter is easier is
-when generating documentation in macros; the `collapse-docs` pass will combine multiple
-`#[doc]` attributes into a single doc comment, letting you generate code like this:
+在大多数情况下，`///` 比 `#[doc]` 更容易使用。一种后面更容易使用的场景是给宏生成文档；`collapse-docs` 会组合多个`#[doc]`属性为一条文档注释，比如：
 
 ```rust,no_run
 #[doc = "This is"]
@@ -26,77 +21,67 @@ when generating documentation in macros; the `collapse-docs` pass will combine m
 # fn f() {}
 ```
 
-Which can feel more flexible. Note that this would generate this:
+这样可能感觉更灵活。注意这跟下面的写法是一样的：
 
 ```rust,no_run
 #[doc = "This is\n a \ndoc comment"]
 # fn f() {}
 ```
 
-but given that docs are rendered via Markdown, it will remove these newlines.
+给出的文档会渲染成 markdown，会删除换行符。
 
-Another use case is for including external files as documentation:
+另一个有用的场景是引入外部文件：
 
 ```rust,no_run
 #[doc = include_str!("../README.md")]
 # fn f() {}
 ```
 
-The `doc` attribute has more options though! These don't involve the text of
-the output, but instead, various aspects of the presentation of the output.
-We've split them into two kinds below: attributes that are useful at the
-crate level, and ones that are useful at the item level.
+`doc` 属性有更多的选项！不会包含在输出中，但是可以控制输出的表示。我们将它们分为两大类：在 crate 层面使用的，和在 item 层面使用的。
 
-## At the crate level
+## crate 层面
 
-These options control how the docs look at a crate level.
+这些选项控制文档在 crate 层面如何表示。
 
 ### `html_favicon_url`
 
-This form of the `doc` attribute lets you control the favicon of your docs.
+这个 `doc` 属性让你控制你的文档图标。
 
 ```rust,no_run
 #![doc(html_favicon_url = "https://example.com/favicon.ico")]
 ```
 
-This will put `<link rel="shortcut icon" href="{}">` into your docs, where
-the string for the attribute goes into the `{}`.
+这会在你的文档中加入`<link rel="shortcut icon" href="{}">` ，属性的值会填入`{}`。
 
-If you don't use this attribute, there will be no favicon.
+如果你不使用这个属性，就没有图标。
 
 ### `html_logo_url`
 
-This form of the `doc` attribute lets you control the logo in the upper
-left hand side of the docs.
+这个 `doc` 属性可以让你控制左上角的 logo。
 
 ```rust,no_run
 #![doc(html_logo_url = "https://example.com/logo.jpg")]
 ```
 
-This will put `<a href='index.html'><img src='{}' alt='logo' width='100'></a>` into
-your docs, where the string for the attribute goes into the `{}`.
+这会在你的文档中加入 `<a href='index.html'><img src='{}' alt='logo' width='100'></a>`，属性的值会填入 `{}`。
 
-If you don't use this attribute, there will be no logo.
+如果你不使用这个属性，就没有 logo。
 
 ### `html_playground_url`
 
-This form of the `doc` attribute lets you control where the "run" buttons
-on your documentation examples make requests to.
+这个 `doc` 属性让你控制文档示例中的 "run" 按钮的请求到哪里。
 
 ```rust,no_run
 #![doc(html_playground_url = "https://playground.example.com/")]
 ```
 
-Now, when you press "run", the button will make a request to this domain.
+现在，当你按下 "run"，会向对应网站发出请求。
 
-If you don't use this attribute, there will be no run buttons.
+如果你没有使用这个属性，没有运行按钮。
 
 ### `issue_tracker_base_url`
 
-This form of the `doc` attribute is mostly only useful for the standard library;
-When a feature is unstable, an issue number for tracking the feature must be
-given. `rustdoc` uses this number, plus the base URL given here, to link to
-the tracking issue.
+这个 `doc` 属性在标准库中使用最多；当一个特性未稳定时，需要提供 issue number 来追踪这个特性。`rustdoc` 使用这个 number，加入到给定的基本 URL 来链接到追踪的网址。
 
 ```rust,no_run
 #![doc(issue_tracker_base_url = "https://github.com/rust-lang/rust/issues/")]
@@ -104,14 +89,7 @@ the tracking issue.
 
 ### `html_root_url`
 
-The `#[doc(html_root_url = "…")]` attribute value indicates the URL for
-generating links to external crates. When rustdoc needs to generate a link to
-an item in an external crate, it will first check if the extern crate has been
-documented locally on-disk, and if so link directly to it. Failing that, it
-will use the URL given by the `--extern-html-root-url` command-line flag if
-available. If that is not available, then it will use the `html_root_url`
-value in the extern crate if it is available. If that is not available, then
-the extern items will not be linked.
+`#[doc(html_root_url = "…")]` 属性的值表明了生成外部 crate 的 URL。当 rustdoc 需要生成一个外部 crate item 的链接时，首先检查本地外部 crate 的文档，如果存在直接链接指向。如果失败，就会使用 `--extern-html-root-url` 命令行参数的值，如果没有这个参数，才会使用 `html_root_url` ，如果还是无效，外部 item 不会链接。
 
 ```rust,no_run
 #![doc(html_root_url = "https://docs.rs/serde/1.0")]
@@ -119,44 +97,43 @@ the extern items will not be linked.
 
 ### `html_no_source`
 
-By default, `rustdoc` will include the source code of your program, with links
-to it in the docs. But if you include this:
+默认情况下，`rustdoc` 会包含你的源码链接到文档中。
+但是如果你这样写：
 
 ```rust,no_run
 #![doc(html_no_source)]
 ```
 
-it will not.
+就不会。
 
 ### `test(no_crate_inject)`
 
-By default, `rustdoc` will automatically add a line with `extern crate my_crate;` into each doctest.
-But if you include this:
+默认情况下，`rustdoc` 会自动加一行 `extern crate my_crate;` 到每个文档测试中。
+但是如果你这样写了：
 
 ```rust,no_run
 #![doc(test(no_crate_inject))]
 ```
 
-it will not.
+就不会。
 
 ### `test(attr(...))`
 
-This form of the `doc` attribute allows you to add arbitrary attributes to all your doctests. For
-example, if you want your doctests to fail if they produce any warnings, you could add this:
+这个 `doc` 属性允许你对你所有的文档测试加上某个属性。比如，如果你想要你的文档测试存在警告时失败，可以这样写：
 
 ```rust,no_run
 #![doc(test(attr(deny(warnings))))]
 ```
 
-## At the item level
+## item 层面
 
-These forms of the `#[doc]` attribute are used on individual items, to control how
-they are documented.
+这些 `#[doc]` 属性单独给 item 使用，控制 item 文档表示。
 
-## `#[doc(no_inline)]`/`#[doc(inline)]`
+### `inline` and `no_inline`
 
-These attributes are used on `use` statements, and control where the documentation shows
-up. For example, consider this Rust code:
+<span id="docno_inlinedocinline"></span>
+
+这两个属性可以用于 `use` 声明。比如，考虑如下 Rust 代码：
 
 ```rust,no_run
 pub use bar::Bar;
@@ -168,11 +145,9 @@ pub mod bar {
 }
 # fn main() {}
 ```
+文档会生成 "Re-exports" 小节，表示`pub use bar::Bar;` 其中`Bar` 会链接到自己的页面。
 
-The documentation will generate a "Re-exports" section, and say `pub use bar::Bar;`, where
-`Bar` is a link to its page.
-
-If we change the `use` line like this:
+如果我们将代码改为：
 
 ```rust,no_run
 #[doc(inline)]
@@ -181,10 +156,9 @@ pub use bar::Bar;
 # fn main() {}
 ```
 
-Instead, `Bar` will appear in a `Structs` section, just like `Bar` was defined at the
-top level, rather than `pub use`'d.
+`Bar` 就会出现在 `Structs` 小节，就像 `Bar` 就定义在顶层一样，而不是 `pub use` 的。
 
-Let's change our original example, by making `bar` private:
+然后我们修改原始的例子，使 `bar` 私有：
 
 ```rust,no_run
 pub use bar::Bar;
@@ -197,10 +171,7 @@ mod bar {
 # fn main() {}
 ```
 
-Here, because `bar` is not public, `Bar` wouldn't have its own page, so there's nowhere
-to link to. `rustdoc` will inline these definitions, and so we end up in the same case
-as the `#[doc(inline)]` above; `Bar` is in a `Structs` section, as if it were defined at
-the top level. If we add the `no_inline` form of the attribute:
+这里，因为 `bar` 不是公共的，`Bar` 没有自己的页面，所有没有链接可以指向。`rustdoc` 将会内联定义，所以会得到与 `#[doc(inline)]` 一样的结果：`Bar` 就会出现在 `Structs` 小节，就像 `Bar` 就定义在顶层一样。如果我们加上 `no_inline` 属性：
 
 ```rust,no_run
 #[doc(no_inline)]
@@ -214,18 +185,52 @@ mod bar {
 # fn main() {}
 ```
 
-Now we'll have a `Re-exports` line, and `Bar` will not link to anywhere.
+现在我们有了 `Re-exports`，并且 `Bar` 没有链接到任何页面。
 
-One special case: In Rust 2018 and later, if you `pub use` one of your dependencies, `rustdoc` will
-not eagerly inline it as a module unless you add `#[doc(inline)]`.
+一个特殊情况：在 Rust 2018 以及更高版本，如果你 `pub use` 你的依赖，`rustdoc` 不会作为 modules 内联除非你加上 `#[doc(inline)]`。
 
-## `#[doc(hidden)]`
+### `hidden`
 
-Any item annotated with `#[doc(hidden)]` will not appear in the documentation, unless
-the `strip-hidden` pass is removed.
+<span id="dochidden"></span>
 
-## `#[doc(primitive)]`
+任何标注了 `#[doc(hidden)]` 的 item 不会出现在文档中，除非 `strip-hidden` pass 被删除。 
+### `alias`
 
-Since primitive types are defined in the compiler, there's no place to attach documentation
-attributes. This attribute is used by the standard library to provide a way to generate
-documentation for primitive types.
+这个属性给搜索索引增加了别名。
+
+让我们举个例子：
+
+```rust,no_run
+#[doc(alias = "TheAlias")]
+pub struct SomeType;
+```
+
+现在，如果你输入 "TheAlias" 搜索，也会显示`SomeType`。当然如果你输入 `SomeType` 也会显示 `SomeType`！
+
+#### FFI 例子
+
+文档属性在写 c 库的 bingding 时尤其有用。比如，我们有一个下面这样的 C 函数：
+
+```c
+int lib_name_do_something(Obj *obj);
+```
+
+它输入一个指向 `Obj` 类型的指针返回一个整数。在 Rust 中，可能会这样写：
+
+```ignore (using non-existing ffi types)
+pub struct Obj {
+    inner: *mut ffi::Obj,
+}
+
+impl Obj {
+    pub fn do_something(&mut self) -> i32 {
+        unsafe { ffi::lib_name_do_something(self.inner) }
+    }
+}
+```
+
+函数已经被转换为一个方法便于使用。但是如果你想要寻找 Rust 相当的 `lib_name_do_something`，你没有办法做到。
+
+为了避免这个限制，我们只需要在 `do_something` 方法加上 `#[doc(alias = "lib_name_do_something")]`，然后就可以了！
+
+用户可以直接搜索 `lib_name_do_something` 然后找到`Obj::do_something`。

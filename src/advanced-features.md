@@ -1,25 +1,16 @@
-# Advanced features
+# 高级特性
 
-The features listed on this page fall outside the rest of the main categories.
+本页列出的特性不属于其他的主要类别
 
-## `#[cfg(doc)]`: Documenting platform-specific or feature-specific information
+## `#[cfg(doc)]`: 文档平台相关或者特性相关信息
 
-For conditional compilation, Rustdoc treats your crate the same way the compiler does. Only things
-from the host target are available (or from the given `--target` if present), and everything else is
-"filtered out" from the crate. This can cause problems if your crate is providing different things
-on different targets and you want your documentation to reflect all the available items you
-provide.
+对于条件编译，rustdoc 会与编译器相同的方式处理。只生成目标主机可用的文档，其他的被“过滤掉”。当对于不同目标提供不同的东西并且你希望文档反映你所有的可用项目，这可能会有问题。
 
-If you want to make sure an item is seen by Rustdoc regardless of what platform it's targeting,
-you can apply `#[cfg(doc)]` to it. Rustdoc sets this whenever it's building documentation, so
-anything that uses that flag will make it into documentation it generates. To apply this to an item
-with other `#[cfg]` filters on it, you can write something like `#[cfg(any(windows, doc))]`.
-This will preserve the item either when built normally on Windows, or when being documented
-anywhere.
+如果你希望确保 rustdoc 可以看到某个 item，而忽略目标的平台相关信息，你可以使用`#[cfg(doc)]`。Rustdoc 会在构建文档时设置它，所以使用了这个的 item 会确保生成到文档中，比如 `#[cfg(any(windows, doc))]` 会在 Windows 上构建以及生成所有的文档。
 
-Please note that this `cfg` is not passed to doctests.
+请注意`cfg`不会传递到文档测试中。
 
-Example:
+比如：
 
 ```rust
 /// Token struct that can only be used on Windows.
@@ -29,31 +20,21 @@ pub struct WindowsToken;
 #[cfg(any(unix, doc))]
 pub struct UnixToken;
 ```
+这里，各自的 tokens 只能在各自的平台上使用，但是会同时出现在文档中。
 
-Here, the respective tokens can only be used by dependent crates on their respective platforms, but
-they will both appear in documentation.
+### 特定平台文档之间的交互
 
-### Interactions between platform-specific docs
+Rustdoc 没有什么如同你在每种平台运行一次的魔法方法来编译文档（这种魔法方式被称为 ['holy grail of rustdoc'][#1998]）。
+代替的是，会一次读到你**所有的**代码，与 Rust 编译器通过参数`--cfg doc`读到的一样。但是，Rustdoc 有一个技巧可以在接收到特定平台代码时处理它。
 
-Rustdoc does not have a magic way to compile documentation 'as-if' you'd run it once for each
-platform (such a magic wand has been called the ['holy grail of rustdoc'][#1998]). Instead,
-it sees *all* of your code at once, the same way the Rust compiler would if you passed it
-`--cfg doc`. However, Rustdoc has a trick up its sleeve to handle platform-specific code if it
-*does* receive it.
-
-To document your crate, Rustdoc only needs to know the public signature of your functions.
-In particular, it doesn't have to know how any of your functions are implemented, so it ignores
-all type errors and name resolution errors with function bodies. Note that this does *not*
-work for anything outside a function body: since Rustdoc documents your types, it has to
-know what those types are! For example, this code will work regardless of the platform:
+为你的 crate 生成文档，Rustdoc 只需要知道你的公共函数签名。尤其是，不需要知道你的函数实现，所以会忽略所有函数体类型错误和名称解析错误。注意，这不适用函数体之外的东西：因为 Rustdoc 会记录类型，需要知道类型是什么。比如，无论平台如何，这些代码可以工作：
 
 ```rust,ignore (platform-specific,rustdoc-specific-behavior)
 pub fn f() {
     use std::os::windows::ffi::OsStrExt;
 }
 ```
-
-but this will not, because the unknown type is part of the function signature:
+但是这些不行，因为函数签名中存在为止类型：
 
 ```rust,ignore (platform-specific,rustdoc-specific-behavior)
 pub fn f() -> std::os::windows::ffi::EncodeWide<'static> {
@@ -61,28 +42,25 @@ pub fn f() -> std::os::windows::ffi::EncodeWide<'static> {
 }
 ```
 
-For a more realistic example of code this allows, see [the rustdoc test suite][realistic-async].
+更多的代码示例，请参考 [the rustdoc test suite][realistic-async].
 
 [#1998]: https://github.com/rust-lang/rust/issues/1998
 [realistic-async]: https://github.com/rust-lang/rust/blob/b146000e910ccd60bdcde89363cb6aa14ecc0d95/src/test/rustdoc-ui/error-in-impl-trait/realistic-async.rs
 
-## Add aliases for an item in documentation search
+## 增加文档搜索的 item 别名
 
-This feature allows you to add alias(es) to an item when using the `rustdoc` search through the
-`doc(alias)` attribute. Example:
+这个特性可以通过`doc(alias)`属性增加`rustdoc`搜索 item 的别名。比如：
 
 ```rust,no_run
 #[doc(alias = "x")]
 #[doc(alias = "big")]
 pub struct BigX;
 ```
+然后，当搜索时，你可以输入 "x" 或者 "big"，搜索结果优先显示 `BigX` 结构。
 
-Then, when looking for it through the `rustdoc` search, if you enter "x" or
-"big", search will show the `BigX` struct first.
+文档别名也有一些限制：你不能使用`"`或者空格。
 
-There are some limitations on the doc alias names though: you can't use `"` or whitespace.
-
-You can add multiple aliases at the same time by using a list:
+你可以使用列表一次增加多个别名：
 
 ```rust,no_run
 #[doc(alias("x", "big"))]

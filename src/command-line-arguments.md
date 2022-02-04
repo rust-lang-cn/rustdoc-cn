@@ -1,21 +1,20 @@
 # Command-line arguments
 
-Here's the list of arguments you can pass to `rustdoc`:
+这里是可以传递给 `rustdoc` 的参数列表：
+
 
 ## `-h`/`--help`: help
 
-Using this flag looks like this:
+这样使用：
 
 ```bash
 $ rustdoc -h
 $ rustdoc --help
 ```
+这会展示`rustdoc`内置的帮助，包含了大量可用的命令行 flags。
 
-This will show `rustdoc`'s built-in help, which largely consists of
-a list of possible command-line flags.
+有些 flags 是未稳定的；这个页面只会只包好稳定的参数，`--help`会包含所有的。
 
-Some of `rustdoc`'s flags are unstable; this page only shows stable
-options, `--help` will show them all.
 
 ## `-V`/`--version`: version information
 
@@ -57,13 +56,13 @@ release: 1.17.0
 LLVM version: 3.9
 ```
 
-## `-o`/`--output`: output path
+## `-o`/`--out-dir`: output directory path
 
 Using this flag looks like this:
 
 ```bash
 $ rustdoc src/lib.rs -o target/doc
-$ rustdoc src/lib.rs --output target/doc
+$ rustdoc src/lib.rs --out-dir target/doc
 ```
 
 By default, `rustdoc`'s output appears in a directory named `doc` in
@@ -94,7 +93,7 @@ $ rustdoc src/lib.rs --document-private-items
 By default, `rustdoc` only documents items that are publicly reachable.
 
 ```rust
-pub fn public() {} // this item is public and will documented
+pub fn public() {} // this item is public and will be documented
 mod private { // this item is private and will not be documented
     pub fn unreachable() {} // this item is public, but unreachable, so it will not be documented
 }
@@ -417,3 +416,10 @@ This flag is **deprecated** and **has no effect**.
 Rustdoc only supports Rust source code and Markdown input formats. If the
 file ends in `.md` or `.markdown`, `rustdoc` treats it as a Markdown file.
 Otherwise, it assumes that the input file is Rust.
+
+## `--nocapture`
+
+When this flag is used with `--test`, the output (stdout and stderr) of your tests won't be
+captured by rustdoc. Instead, the output will be directed to your terminal,
+as if you had run the test executable manually. This is especially useful
+for debugging your tests!

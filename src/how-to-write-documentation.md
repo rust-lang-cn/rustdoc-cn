@@ -1,55 +1,36 @@
-# How to write documentation
+# 如何写文档
 
-Good documentation is not natural.  There are opposing goals that make writing
-good documentation difficult.  It requires expertise in the subject but also
-writing to a novice perspective.  Documentation therefore often glazes over
-implementation detail, or leaves readers with unanswered questions.
+好的文档并不自然。存在一些矛盾的目标使得写好文档很困难。即要求对领域很专业又要写出对新手很友好的文档。
+文档因此经常隐去一些细节，或者留给读者一些未解答的问题。
 
-There are a few tenets to Rust documentation that can help guide anyone through
-the process of documenting libraries so that everyone has an ample opportunity
-to use the code.
+Rust 文档有一些原则指导任何人来写文档，从而每个人都有机会来使用代码。
 
-This chapter covers not only how to write documentation but specifically
-how to write **good** documentation.  It is important to be as clear
-as you can, and as complete as possible.  As a rule of thumb: the more
-documentation you write for your crate the better.  If an item is public
-then it should be documented.
+本章不仅覆盖如何编写文档，还介绍了如何写出**好**文档。尽可能清晰完整非常重要。根据经验：
+你编写的文档越多你的 crate 越好。如果 item 是公共的，就应该有文档。
 
-## Getting Started
+## 开始
 
-Documenting a crate should begin with front-page documentation.  As an
-example, the [`hashbrown`] crate level documentation summarizes the role of
-the crate, provides links to explain technical details, and explains why you
-would want to use the crate.
+编写 crate 文档首先应该从首页开始。例如 [`hashbrown`] crate 级别的文档总结了这个 crate 的角色是什么，
+说明了使用的详细技术，以及为什么你需要这个 crate。
 
-After introducing the crate, it is important that the front-page gives
-an example of how to use the crate in a real world setting.  Stick to the
-library's role in the example, but do so without shortcuts to benefit users who
-may copy and paste the example to get started.
+在介绍了 crate 之后，首页给出使用 crate 的代码示例很重要。在代码例子中展示库如何使用，不要使用裁剪过的代码，
+使得用户可以直接复制粘贴就能运行。
 
-[`futures`] uses inline comments to explain line by line
-the complexities of using a [`Future`], because a person's first exposure to
-rust's [`Future`] may be this example.
+[`futures`] 使用内联注释逐行解释使用 [`Future`] 的复杂性，因为用户接触
+rust 的 [`Future`] 的第一个例子可能就是这个。
 
-The [`backtrace`] documentation walks through the whole process, explaining
-changes made to the `Cargo.toml` file, passing command line arguments to the
-compiler, and shows a quick example of backtrace in the wild.
+[`backtrace`] 文档描述了整个使用过程，说明了`Cargo.toml`文件应该如何修改，传递命令行参数
+给编译器，并展示了一个使用 backtrace 的例子。
 
-Finally, the front-page can eventually become a comprehensive reference
-how to use a crate, like [`regex`].  In this front page, all
-requirements are outlined, the edge cases shown, and practical examples
-provided.  The front page goes on to show how to use regular expressions
-then concludes with crate features.
+最后，首页会成为如何使用 crate 的综合参考，就像 [`regex`]。
+在这个首页，所有的依赖被列出，边缘情况被列出，实际例子被列出。然后首页继续展示如何使用正则表达式，然后还列出了
+crate 的特性。
 
-Don't worry about comparing your crate, which is just beginning, to other more
-developed crates.  To get the documentation to something more polished, start
-incrementally and put in an introduction, example, and features.  Rome was not
-built in a day!
+不要担心你的新 crate 与已经开发一段时间的 crate 比较。要是文档逐步完善，请逐步开始添加介绍，示例和特性。罗马不是
+一天建成的！
 
-The first lines within the `lib.rs` will compose the front-page, and they
-use a different convention than the rest of the rustdocs.  Lines should
-start with `//!` which indicate module-level or crate-level documentation.
-Here's a quick example of the difference:
+`lib.rs` 的第一行开始会是首页，它们与 rustdoc 其他部分不同，要以`//!`开始表明这是模块级别或者 crate 级别的文档。
+这是一个简单的例子：
 
 ```rust,no_run
 //! Fast and easy queue abstraction.
@@ -70,18 +51,14 @@ pub mod easy {
 }
 ```
 
-Ideally, this first line of documentation is a sentence without highly
-technical details, but with a good description of where this crate fits
-within the rust ecosystem.  Users should know whether this crate meets their use
-case after reading this line.
+理想情况下，文档第一行是没有技术细节的句子，但是很好的描述了在 Rust 生态中的位置。
+阅读这行后，用户应该知道 crate 是否满足他们的需要。
 
-## Documenting components
+## 文档组成
 
-Whether it is modules, structs, functions, or macros: the public
-API of all code should have documentation. Rarely does anyone
-complain about too much documentation!
+无论是 modules, structs, funtions, macros： 代码的公共 API 都应该有文档。很少有人嫌弃文档太多！
 
-It is recommended that each item's documentation follows this basic structure:
+每个 item 的文档应该都以下面的结构构成：
 
 ```text
 [short sentence explaining what it is]
@@ -93,13 +70,11 @@ It is recommended that each item's documentation follows this basic structure:
 [even more advanced explanations if necessary]
 ```
 
-This basic structure should be straightforward to follow when writing your
-documentation; while you might think that a code example is trivial,
-the examples are really important because they can help users understand
-what an item is, how it is used, and for what purpose it exists.
+编写文档时，基本结构应该很容易遵循；你可能认为代码示例微不足道，但是它真的很重要，
+能帮助用户理解 item 是什么，如何使用，以及存在的目的是什么。
 
-Let's see an example coming from the [standard library] by taking a look at the
-[`std::env::args()`][env::args] function:
+让我们看一个来自 [standard library] 的例子，
+[`std::env::args()`][env::args] 函数：
 
 ``````markdown
 Returns the arguments which this program was started with (normally passed
@@ -133,57 +108,43 @@ for argument in env::args() {
 [`args_os`]: ./fn.args_os.html
 ``````
 
-Everything before the first empty line will be reused to describe the component
-in searches and module overviews.  For example, the function `std::env::args()`
-above will be shown on the [`std::env`] module documentation. It is good
-practice to keep the summary to one line: concise writing is a goal of good
-documentation.
+在第一个空行之间的所有内容都会被用于搜索和模块的简介。比如，上面的`std::enve::args()`函数就会在展示在 [`std::env`] 模块文档中。
+将摘要保持在一行是良好习惯：简介是好文档的目标。
 
-Because the type system does a good job of defining what types a function
-passes and returns, there is no benefit of explicitly writing it
-into the documentation, especially since `rustdoc` adds hyper links to all types in the function signature.
+因为类型系统很好定义了函数的参数和返回值类型，所以将其显式写入文档没有好处，
+尤其是`rustdoc`会自动在函数签名中添加指向类型的超链接。
 
-In the example above, a 'Panics' section explains when the code might abruptly exit,
-which can help the reader prevent reaching a panic.  A panic section is recommended
-every time edge cases in your code can be reached if known.
+在上面的例子中，`Panics`小节解释了代码何时可能会意外退出，
+可以帮助读者规避 panic。如果你知道代码的边缘情况，尽可能增加 panic 小节。
 
-As you can see, it follows the structure detailed above: it starts with a short
-sentence explaining what the functions does, then it provides more information
-and finally provides a code example.
+如同你所看到的，它遵循了给出的结构建议：简短描述函数的作用，然后提供了更多信息以及最后提供了代码示例。
 
 ## Markdown
 
-`rustdoc` uses the [CommonMark Markdown specification]. You might be
-interested in taking a look at their website to see what's possible:
+`rustdoc`使用 [CommonMark Markdown specification]。你可能会对它们的网站感兴趣：:
 
  - [CommonMark quick reference]
  - [current spec]
 
-In addition to the standard CommonMark syntax, `rustdoc` supports several
-extensions:
+补充了标准 CommonMark 语法， `rustdoc` 支持几种扩展：
 
-### Strikethrough
+### Strikethrough（删除线）
 
-Text may be rendered with a horizontal line through the center by wrapping the
-text with two tilde characters on each side:
+文本可以通过两个波浪线来渲染删除线：
 
 ```text
 An example of ~~strikethrough text~~.
 ```
 
-This example will render as:
+这个例子会渲染成：
 
 > An example of ~~strikethrough text~~.
 
-This follows the [GitHub Strikethrough extension][strikethrough].
+这使用 [GitHub Strikethrough extension][strikethrough].
 
-### Footnotes
+### Footnotes（角标）
 
-A footnote generates a small numbered link in the text which when clicked
-takes the reader to the footnote text at the bottom of the item. The footnote
-label is written similarly to a link reference with a caret at the front. The
-footnote text is written like a link reference definition, with the text
-following the label. Example:
+角标会生成一个小号数字链接，点击数字链接会跳转到这个 item 的位置。角标标签类似与链接语法。例子如下：
 
 ```text
 This is an example of a footnote[^note].
@@ -192,20 +153,18 @@ This is an example of a footnote[^note].
     towards the bottom.
 ```
 
-This example will render as:
+这个例子会渲染成：
 
 > This is an example of a footnote[^note].
 >
 > [^note]: This text is the contents of the footnote, which will be rendered
 >     towards the bottom.
 
-The footnotes are automatically numbered based on the order the footnotes are
-written.
+角标数字会根据角标位置自动生成。
 
-### Tables
+### Tables（表格）
 
-Tables can be written using pipes and dashes to draw the rows and columns of
-the table. These will be translated to HTML table matching the shape. Example:
+表格可以可以通过竖线和短横线来表示表格的行和列。被转换为符合 HTML 形状的表格。比如：
 
 ```text
 | Header1 | Header2 |
@@ -213,38 +172,34 @@ the table. These will be translated to HTML table matching the shape. Example:
 | abc     | def     |
 ```
 
-This example will render similarly to this:
+这个例子会被渲染成类似这样：
 
 > | Header1 | Header2 |
 > |---------|---------|
 > | abc     | def     |
 
-See the specification for the [GitHub Tables extension][tables] for more
-details on the exact syntax supported.
+阅读 [GitHub Tables extension][tables] 的说明获取更多细节。
 
 ### Task lists
 
-Task lists can be used as a checklist of items that have been completed.
-Example:
+任务列表可以用于检查需要完成的条目。
+比如：
 
 ```md
 - [x] Complete task
-- [ ] IncComplete task
+- [ ] Incomplete task
 ```
 
-This will render as
+会被渲染成：
 
-<ul>
-    <li><input type="checkbox"></li>
-    <li><input type="checkbox" checked></li>
-</ul>
+> - [x] Complete task
+> - [ ] Incomplete task
 
-See the specification for the [task list extension] for more details.
+阅读 [task list extension] 获得更多细节。
 
-### Smart punctuation
+### Smart punctuation（标点符号）
 
-Some ASCII punctuation sequences will be automatically turned into fancy Unicode
-characters:
+一些 ASCII 符号可以自动转换为更好看的 Unicode 符号：
 
 | ASCII sequence | Unicode |
 |----------------|---------|
@@ -254,7 +209,7 @@ characters:
 | `"`            | “ or ”, depending on context |
 | `'`            | ‘ or ’, depending on context |
 
-So, no need to manually enter those Unicode characters!
+所以，不需要手工输入这些 Unicode 符号！
 
 [`backtrace`]: https://docs.rs/backtrace/0.3.50/backtrace/
 [commonmark markdown specification]: https://commonmark.org/

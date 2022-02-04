@@ -1,6 +1,6 @@
 # Passes
 
-Rustdoc 有一个概念叫做"passes"。在 `rustdoc`命令最终生成文档之前存在一些转换。
+Rustdoc 有一个概念叫做 "passes"。在 `rustdoc` 命令最终生成文档之前存在一些转换。
 
 自定义 passes 被**废弃**了，已经可用的 passes 不会稳定可能随时会在发布中更改
 

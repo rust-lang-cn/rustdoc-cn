@@ -2,7 +2,6 @@
 
 这里是可以传递给 `rustdoc` 的参数列表：
 
-
 ## `-h`/`--help`: help
 
 这样使用：
@@ -11,10 +10,10 @@
 $ rustdoc -h
 $ rustdoc --help
 ```
-这会展示`rustdoc`内置的帮助，包含了大量可用的命令行 flags。
 
-有些 flags 是未稳定的；这个页面只会只包好稳定的参数，`--help`会包含所有的。
+这会展示 `rustdoc` 内置的帮助，包含了大量可用的命令行 flags。
 
+有些 flags 是未稳定的；这个页面只会只包好稳定的参数，`--help` 会包含所有的。
 
 ## `-V`/`--version`: version information
 
@@ -69,7 +68,6 @@ By default, `rustdoc`'s output appears in a directory named `doc` in
 the current working directory. With this flag, it will place all output
 into the directory you specify.
 
-
 ## `--crate-name`: controlling the name of the crate
 
 Using this flag looks like this:
@@ -116,7 +114,6 @@ dependencies.
 
 This flag takes any number of directories as its argument, and will use all of
 them when searching.
-
 
 ## `--cfg`: passing configuration flags
 
@@ -222,7 +219,7 @@ The set of available themes can be seen in the theme picker in the
 generated output.
 
 Note that the set of available themes - and their appearance - is not
-necessarily stable from one rustdoc version to the next.  If the
+necessarily stable from one rustdoc version to the next. If the
 requested theme does not exist, the builtin default (currently
 `light`) is used instead.
 
@@ -238,7 +235,7 @@ When rendering Markdown files, this will create a `<link>` element in the
 `<head>` section of the generated HTML. For example, with the invocation above,
 
 ```html
-<link rel="stylesheet" type="text/css" href="foo.css">
+<link rel="stylesheet" type="text/css" href="foo.css" />
 ```
 
 will be added.
@@ -283,7 +280,6 @@ This flag takes a list of files, and inserts them before the `</body>` tag but
 after the other content `rustdoc` would normally produce in the rendered
 documentation.
 
-
 ## `--markdown-playground-url`: control the location of the playground
 
 Using this flag looks like this:
@@ -294,7 +290,6 @@ $ rustdoc README.md --markdown-playground-url https://play.rust-lang.org/
 
 When rendering a Markdown file, this flag gives the base URL of the Rust
 Playground, to use for generating `Run` buttons.
-
 
 ## `--markdown-no-toc`: don't generate a table of contents
 
@@ -307,7 +302,6 @@ $ rustdoc README.md --markdown-no-toc
 When generating documentation from a Markdown file, by default, `rustdoc` will
 generate a table of contents. This flag suppresses that, and no TOC will be
 generated.
-
 
 ## `-e`/`--extend-css`: extend rustdoc's CSS
 

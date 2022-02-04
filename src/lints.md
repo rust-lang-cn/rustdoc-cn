@@ -7,7 +7,8 @@
 #![warn(rustdoc::broken_intra_doc_links)] // warn if there are broken intra-doc links
 #![deny(rustdoc::broken_intra_doc_links)] // error if there are broken intra-doc links
 ```
-注意，出了`missing_docs`，这些 lints 只有当运行`rustdoc`的时候才会生效，`rustc`不会。
+
+注意，出了 `missing_docs`，这些 lints 只有当运行 `rustdoc` 的时候才会生效，`rustc` 不会。
 
 这是`rustdoc` lints 的列表：
 
@@ -21,6 +22,7 @@
 /// I want to link to [`Nonexistent`] but it doesn't exist!
 pub fn foo() {}
 ```
+
 你会得到警告：
 
 ```text
@@ -30,6 +32,7 @@ warning: unresolved link to `Nonexistent`
 1 | /// I want to link to [`Nonexistent`] but it doesn't exist!
   |                        ^^^^^^^^^^^^^ no item named `Nonexistent` in `test`
 ```
+
 当存在歧义时也会得到警告，以及如何消除歧义的建议：
 
 ```rust
@@ -72,6 +75,7 @@ help: to link to the function, add parentheses
 pub fn public() {}
 fn private() {}
 ```
+
 会给出这个文档中链接时损坏的：
 
 ```text
@@ -84,7 +88,8 @@ warning: public documentation for `public` links to private item `private`
   = note: `#[warn(rustdoc::private_intra_doc_links)]` on by default
   = note: this link will resolve properly if you pass `--document-private-items`
 ```
-注意到取决于你是否传递`--document-private-items`参数会有不同的行为！如果你有私有 item 的文档，尽管会有警告，仍然会生成这个链接：
+
+注意到取决于你是否传递 `--document-private-items` 参数会有不同的行为！如果你有私有 item 的文档，尽管会有警告，仍然会生成这个链接：
 
 ```text
 warning: public documentation for `public` links to private item `private`
@@ -101,8 +106,7 @@ warning: public documentation for `public` links to private item `private`
 
 ## missing_docs
 
-这个 lint **默认允许**。缺少文档时提示。
-比如：
+这个 lint **默认允许**。缺少文档时提示。比如：
 
 ```rust
 #![warn(missing_docs)]
@@ -110,6 +114,7 @@ warning: public documentation for `public` links to private item `private`
 pub fn undocumented() {}
 # fn main() {}
 ```
+
 `undocumented` 函数会有下面的警告：
 
 ```text
@@ -119,6 +124,7 @@ warning: missing documentation for a function
  3 | pub fn undocumented() {}
    | ^^^^^^^^^^^^^^^^^^^^^
 ```
+
 注意不像其他 lint，这个 lint 也对 `rustc` 有效。
 
 ## missing_crate_level_docs
@@ -129,6 +135,7 @@ warning: missing documentation for a function
 ```rust
 #![warn(rustdoc::missing_crate_level_docs)]
 ```
+
 会生成下面的警告：
 
 ```text
@@ -137,12 +144,12 @@ warning: no documentation found for this crate's top-level module
   = help: The following guide may be of use:
           https://doc.rust-lang.org/nightly/rustdoc/how-to-write-documentation.html
 ```
+
 当前默认是允许的，但是计划未来默认警告。这可以不使用`missing_docs`这种严重的警告，介绍给新用户如何给他们的 crate 写文档。
 
 ## missing_doc_code_examples
 
-这个 lint **默认允许** 并且 **nightly-only**。当文档缺少代码示例时提示。
-比如：
+这个 lint **默认允许** 并且 **nightly-only**。当文档缺少代码示例时提示。比如：
 
 ```rust
 #![warn(rustdoc::missing_doc_code_examples)]
@@ -161,6 +168,7 @@ warning: Missing code example in this documentation
 LL | /// There is no code example!
    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ```
+
 为了修复这个 lint，你需要在文档块中加入代码示例：
 
 ```rust
@@ -209,8 +217,7 @@ warning: Documentation test in private item
 
 ## invalid_codeblock_attributes
 
-这个 lint **默认警告**。提示文档例子中的代码块属性有潜在的错误。 
-比如：
+这个 lint **默认警告**。提示文档例子中的代码块属性有潜在的错误。比如：
 
 ```rust
 #![warn(rustdoc::invalid_codeblock_attributes)]  // note: unnecessary - warns by default.
@@ -240,7 +247,7 @@ warning: unknown attribute `should-panic`. Did you mean `should_panic`?
   = help: the code block will either not be tested if not marked as a rust one or won't fail if it doesn't panic when running
 ```
 
-上面的例子中，正确的拼写是`should_panic`。可以提示一些常用的属性 typo 错误。
+上面的例子中，正确的拼写是 `should_panic`。可以提示一些常用的属性 typo 错误。
 
 ## invalid_html_tags
 
@@ -283,8 +290,7 @@ warning: 2 warnings emitted
 
 ## invalid_rust_codeblocks
 
-这个 lint **默认警告**。提示文档中的 Rust 代码块无效（比如，空的，无法被解析为 Rust 代码）
-比如：
+这个 lint **默认警告**。提示文档中的 Rust 代码块无效（比如，空的，无法被解析为 Rust 代码）。比如：
 
 ```rust
 /// Empty code blocks (with and without the `rust` marker):

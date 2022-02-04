@@ -1,6 +1,6 @@
 # References
 
-有很多良好的`rustdoc`参考，如果你知道其他的好资源，请提交 PR！
+有很多良好的 `rustdoc` 参考，如果你知道其他的好资源，请提交 PR！
 
 ## 官方
 
@@ -11,6 +11,7 @@
 - [RFC 1946: Intra Rustdoc Links]
 
 ## 社区
+
 - [API Guidelines]
 - [Github tagged RFCs]
 - [Github tagged issues]

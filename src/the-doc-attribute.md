@@ -12,7 +12,7 @@
 
 （请注意属性版本的开始的空格。）
 
-在大多数情况下，`///` 比 `#[doc]` 更容易使用。一种后面更容易使用的场景是给宏生成文档；`collapse-docs` 会组合多个`#[doc]`属性为一条文档注释，比如：
+在大多数情况下，`///` 比 `#[doc]` 更容易使用。一种后面更容易使用的场景是给宏生成文档；`collapse-docs` 会组合多个 `#[doc]`属性为一条文档注释，比如：
 
 ```rust,no_run
 #[doc = "This is"]
@@ -51,7 +51,7 @@
 #![doc(html_favicon_url = "https://example.com/favicon.ico")]
 ```
 
-这会在你的文档中加入`<link rel="shortcut icon" href="{}">` ，属性的值会填入`{}`。
+这会在你的文档中加入 `<link rel="shortcut icon" href="{}">`，属性的值会填入 `{}`。
 
 如果你不使用这个属性，就没有图标。
 
@@ -145,7 +145,8 @@ pub mod bar {
 }
 # fn main() {}
 ```
-文档会生成 "Re-exports" 小节，表示`pub use bar::Bar;` 其中`Bar` 会链接到自己的页面。
+
+文档会生成 "Re-exports" 小节，表示 `pub use bar::Bar;` 其中 `Bar` 会链接到自己的页面。
 
 如果我们将代码改为：
 
@@ -193,7 +194,8 @@ mod bar {
 
 <span id="dochidden"></span>
 
-任何标注了 `#[doc(hidden)]` 的 item 不会出现在文档中，除非 `strip-hidden` pass 被删除。 
+任何标注了 `#[doc(hidden)]` 的 item 不会出现在文档中，除非 `strip-hidden` pass 被删除。
+
 ### `alias`
 
 这个属性给搜索索引增加了别名。
@@ -205,7 +207,7 @@ mod bar {
 pub struct SomeType;
 ```
 
-现在，如果你输入 "TheAlias" 搜索，也会显示`SomeType`。当然如果你输入 `SomeType` 也会显示 `SomeType`！
+现在，如果你输入 "TheAlias" 搜索，也会显示 `SomeType`。当然如果你输入 `SomeType` 也会显示 `SomeType`！
 
 #### FFI 例子
 

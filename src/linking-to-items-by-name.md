@@ -25,18 +25,15 @@ pub struct Bar;
 
 不像常规的 markdown，`[bar][Bar]` 语法也被支持，不需要`[Bar]: ...` 链接。
 
-反引号会被删除， 所以 ``[`Option`]`` 可以正确地链接到`Option`。
+反引号会被删除，所以 ``[`Option`]`` 可以正确地链接到`Option`。
 
 ## 有效链接
 
-你可以链接作用域的任何东西，使用路径，包括`Self`, `self`, `super`和
-`crate`。Associated items (functions, types, and constants) 也是支持的，但是 [不能是空的
-trait 实现][#79682]. Rustdoc 还支持 [the standard library documentation](../std/index.html#primitives) 列出的原始类型链接。
+你可以链接作用域的任何东西，使用路径，包括 `Self`, `self`, `super`和 `crate`。Associated items (functions, types, and constants) 也是支持的，但是 [不能是空的 trait 实现][#79682]。Rustdoc 还支持 [the standard library documentation](../std/index.html#primitives) 列出的原始类型链接。
 
 [#79682]: https://github.com/rust-lang/rust/pull/79682
 
-你还可以链接范型参数，比如 `Vec<T>`。链接会如同你写了 ``[`Vec<T>`](Vec)``. 但是，Fully-qualified syntax（比如，
-`<Vec as IntoIterator>::into_iter()`) 还 [没有被支持][fqs-issue]。
+你还可以链接范型参数，比如 `Vec<T>`。链接会如同你写了 ``[`Vec<T>`](Vec)``. 但是，Fully-qualified syntax（比如，`<Vec as IntoIterator>::into_iter()`） 还 [没有被支持][fqs-issue]。
 
 [fqs-issue]: https://github.com/rust-lang/rust/issues/74563
 
@@ -80,9 +77,9 @@ struct Foo {}
 fn Foo() {}
 ```
 
-这些前缀展示在文档时会被删除，所以`[struct@Foo]`会被渲染成`Foo`。
+这些前缀展示在文档时会被删除，所以 `[struct@Foo]` 会被渲染成 `Foo`。
 
-你也可以在函数名后加上`()`和在宏名后面加上`!`消除歧义：
+你也可以在函数名后加上 `()` 和在宏名后面加上 `!` 消除歧义：
 
 ```rust
 /// This is different from [`foo!`]
@@ -115,10 +112,11 @@ pub use std::process::Command;
 
 pub fn foo() {}
 ```
+
 这对于过程宏非常有用，过程宏必须定义在自己的 crate 中。
 
 注意：因为 `macro_ruls!` 宏的作用域是整个 Rust，`macro_rules!` 的 intra-doc 链接在 [relative to the crate root][#72243] 解析，而不是定义的模块内。
 
-如果链接看起来不像是 intra-doc 链接，它们会被忽略并且不会生成警告，即使链接解析失败。比如，任何包含了 `/` 或者 `[]`字符的链接都被忽略。
+如果链接看起来不像是 intra-doc 链接，它们会被忽略并且不会生成警告，即使链接解析失败。比如，任何包含了 `/` 或者 `[]` 字符的链接都被忽略。
 
 [#72243]: https://github.com/rust-lang/rust/issues/72243

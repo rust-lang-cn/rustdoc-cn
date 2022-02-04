@@ -4,35 +4,33 @@ Rustdoc 的 HTML 文件包含了有用的跳转入口，便于用户跳转理解
 
 ## 结构
 
-`rustdoc`的输出包含三部分，左侧是整个页面的快速导航，展示了当前条目的上下文信息。页面的右侧大版面由顶部的搜索和下面的文档页面主体组成。
+`rustdoc` 的输出包含三部分，左侧是整个页面的快速导航，展示了当前条目的上下文信息。页面的右侧大版面由顶部的搜索和下面的文档页面主体组成。
 
 ## Item 文档
 
 屏幕的主要区域展示的是 item 的文档。
 
 顶端是一览信息：
-- item 的类型和名称，比如 "Struct `std::time::Duration`",
-- 复制 crate 路径的按钮
-- 展开和收起 item 顶层文档的按钮 (`[+]` or `[-]`),
-- 如果 [configured](the-doc-attribute.html#html_no_source), 并且可以展示（如果文档创建通过 `cargo doc --no-deps` 源码可能是无效的），
-  会有源码的连接 (`[src]`),
-- 如果 item 是标准库，会展示 item 稳定的版本
+
+- item 的类型和名称，比如 "Struct `std::time::Duration`"；
+- 复制 crate 路径的按钮；
+- 展开和收起 item 顶层文档的按钮 (`[+]` or `[-]`)；
+- 如果 [configured](the-doc-attribute.html#html_no_source), 并且可以展示（如果文档创建通过 `cargo doc --no-deps` 源码可能是无效的），会有源码的连接 (`[src]`)；
+- 如果 item 是标准库，会展示 item 稳定的版本。
 
 下面是 item 的主要文档，包括函数签名，Rust 类型的 fields 列表或者 variants。最后页面列出关联的函数以及 trait 实现，包括 `rustdoc` 知道的自动和空白实现。
 
 ### 导航
 
-subheadings， variants，fields 和文档中很多元素都是锚，可以被链接，这是可以准确传递你表达的好方法。当悬停或给定键盘焦点时，印刷符号"§" 出现在带有锚点的行旁边。
+subheadings，variants，fields 和文档中很多元素都是锚，可以被链接，这是可以准确传递你表达的好方法。当悬停或给定键盘焦点时，印刷符号 "§" 出现在带有锚点的行旁边。
 
 ## 导航栏
 
-比如，当查看 crate 根文档的时候，会展示所有的 crate 文档的 modules，structs，traits，functions，macros 的快速链接。
-顶部，在当前 crate 名称和版本旁边或者当前 item 旁边展示 [configurable logo](the-doc-attribute.html#html_logo_url)。
+比如，当查看 crate 根文档的时候，会展示所有的 crate 文档的 modules，structs，traits，functions，macros 的快速链接。顶部，在当前 crate 名称和版本旁边或者当前 item 旁边展示 [configurable logo](the-doc-attribute.html#html_logo_url)。
 
 ## 主题选择和搜索栏
 
-当在支持 JavaScript 的浏览器中打开 `rustdoc` 的输出时，页面顶部会出现一个接口，左侧是主题选择（一个画笔图标），搜索栏，帮助提示和配置按钮
-【译者注：主题选择已经在配置设置中】
+当在支持 JavaScript 的浏览器中打开 `rustdoc` 的输出时，页面顶部会出现一个接口，左侧是主题选择（一个画笔图标），搜索栏，帮助提示和配置按钮。【译者注：主题选择已经在配置设置中】
 
 ### 主题选择
 
@@ -46,12 +44,12 @@ subheadings， variants，fields 和文档中很多元素都是锚，可以被�
 
 还有两种结果，按照参数搜索，展示函数参数中类型的匹配结果，按返回值搜索，展示函数返回值类型的搜索结构。这两种搜索结果在你不知道函数名称，但是知道你想要的类型时非常有用。
 
-当在搜索栏输入时，可以通过冒号前缀来限制搜索结果的类型（比如`mod:`）
+当在搜索栏输入时，可以通过冒号前缀来限制搜索结果的类型（比如 `mod:`）
 
 ### 快捷键
 
-按下`S`焦点会移动到搜索框，按下`?`会展示帮助界面，其中包括所有快捷键以及说明。按下`T`焦点移动到主题选择。【译者注：主题选择通过搜索栏的右侧 setting 按钮唤出】
+按下 `S` 焦点会移动到搜索框，按下 `?` 会展示帮助界面，其中包括所有快捷键以及说明。按下 `T` 焦点移动到主题选择。【译者注：主题选择通过搜索栏的右侧 setting 按钮唤出】
 
 当焦点在搜索结果时，左右箭头可以切换搜索的 tab，上下箭头可以移动关注的搜索结果。按下回车键可以打开高亮的结果。
 
-当焦点在 item 文档时，加号和减号可以展开收起文档的小结
+当焦点在 item 文档时，加号和减号可以展开收起文档的小结。

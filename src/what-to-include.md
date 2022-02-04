@@ -35,7 +35,7 @@ warning: 1 warning emitted
 
 作为一个库作者，加入 lint `#![deny(missing_docs)]` 是一个确保项目拥有良好文档的好方法，`#![warn(missing_docs)]` 是通向良好文档的好方法。除了文档，`#![deny(missing_doc_code_examples)]` 确保每个函数有一个使用示例。在我们上面的例子中，添加 crate 级别的 lint 来警告。
 
-下面的章节有更多 lints 的细节 [Lints][rustdoc-lints].
+下面的章节有更多 lints 的细节 [Lints][rustdoc-lints]。
 
 ## 例子
 
@@ -45,17 +45,17 @@ warning: 1 warning emitted
 
 最好不要在例子中使用 `unwrap()`，并且如果错误处理使得例子难以理解应该被隐藏起来。
 
-``````text
+````text
 /// Example
 /// ```rust
 /// let fourtytwo = "42".parse::<u32>()?;
 /// println!("{} + 10 = {}", fourtytwo, fourtytwo+10);
 /// ```
-``````
+````
 
 当 rustdoc wrap 这些到 main 函数中，会编译错误因为 `ParseIntError` trait 没有实现。为了同时帮助读者和测试，这个例子还需要增加些额外代码：
 
-``````text
+````text
 /// Example
 /// ```rust
 /// # main() -> Result<(), std::num::ParseIntError> {
@@ -64,7 +64,7 @@ warning: 1 warning emitted
 /// #     Ok(())
 /// # }
 /// ```
-``````
+````
 
 这两个例子在文档页面是相同的，但是对你 crate 的使用者有一些额外的信息。更多的文档测试内容在接下来的 [文档测试] 章节中。
 

@@ -1,5 +1,13 @@
 # rustdoc 手册
 
+![Build Status](https://github.com/rust-lang-cn/rustdoc-cn/workflows/CI/badge.svg)
+[![LICENSE-MIT](https://img.shields.io/badge/license-MIT-green)](https://raw.githubusercontent.com/rust-lang-cn/rustdoc-cn/master/LICENSE-MIT)
+[![LICENSE-APACHE](https://img.shields.io/badge/license-Apache%202-blue)](https://raw.githubusercontent.com/rust-lang-cn/rustdoc-cn/master/LICENSE-APACHE)
+[![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rustdoc-cn?color=gold)](https://github.com/rust-lang-cn/rustdoc-cn/commits/master)
+[![GitHub contributors](https://img.shields.io/github/contributors/rust-lang-cn/rustdoc-cn?color=pink)](https://github.com/rust-lang-cn/rustdoc-cn/graphs/contributors)
+![Locatized 100%](https://img.shields.io/badge/localized-100%25-purple)
+[![rustwiki.org](https://img.shields.io/website?up_message=rustwiki.org&url=https%3A%2F%2Frustwiki.org)](https://rustwiki.org)
+
 这是《rustdoc 手册》中文版，翻译自《rustdoc Book》。
 
 ## 构建

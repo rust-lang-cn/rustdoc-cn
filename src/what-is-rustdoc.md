@@ -20,24 +20,24 @@ $ cargo new docs --lib
 $ cd docs
 ```
 
-在 `src/lib.rs` 中，Cargo 生成了一些事例代码，删掉使用下面的代码代替
+在 `src/lib.rs` 中，Cargo 生成了一些示例代码，将其删除并替换为下面的代码：
 
 ```rust
 /// foo is a function
 fn foo() {}
 ```
 
-然后我们运行 `rustdoc`。我们可以在 crate 根目录执行下面的命令
+然后我们运行 `rustdoc`。我们可以在 crate 根路径执行下面的命令：
 
 ```bash
 $ rustdoc src/lib.rs
 ```
 
-这会创建一个新目录 `doc`，其中是一个网站结构。在我们的例子中，主页面是 `doc/lib/index.html`。如果你使用浏览器打开，可以在 tab 栏看到 "Crate lib"，页面没有内容。
+这会创建一个新目录 `doc`，其中包含一个网站。在我们的例子中，主页面是 `doc/lib/index.html`。如果你使用浏览器打开，可以看到一个带有搜索栏的页面，在顶部可以看到“Crate lib”，页面没有内容。
 
 ## 配置 rustdoc
 
-现在有两个问题：第一，为什么我们的包名字是 "lib"？第二，为什么没有任何内容？
+现在有两个问题：第一，为什么我们的包名字是“lib”？第二，为什么没有任何内容？
 
 第一个问题的原因是因为 `rustdoc` 试图更好用，像 `rustc` 就假定我们 crate 的名字就是 crate 根目录文件的名字。为了修复这个问题，可以通过命令行传递参数：
 
@@ -45,7 +45,7 @@ $ rustdoc src/lib.rs
 $ rustdoc src/lib.rs --crate-name docs
 ```
 
-现在， `doc/docs/index.html` 文件生成，页面名称为 "Crate docs"。
+现在，`doc/docs/index.html` 文件生成，页面名称为“Crate docs”。
 
 对于第二个问题，因为我们的函数 `foo` 不是公共的；`rustdoc` 默认只会为公共函数生成文档，如果我们将代码修改为
 
@@ -54,13 +54,13 @@ $ rustdoc src/lib.rs --crate-name docs
 pub fn foo() {}
 ```
 
-然后重新运行 `rustdoc`:
+然后重新运行 `rustdoc`：
 
 ```bash
 $ rustdoc src/lib.rs --crate-name docs
 ```
 
-现在我们生成了文档，打开 `doc/docs/index.html`，显示了 `foo` 函数的连接页面，文件位置是 `doc/docs/fn.foo.html`。在函数的页面上，你可以看到我们写的注释 "foo is a function"。
+现在我们生成了文档，打开 `doc/docs/index.html`，显示了 `foo` 函数的连接页面，文件位置是 `doc/docs/fn.foo.html`。在函数的页面上，你可以看到我们写的注释“foo is a function”。
 
 ## 通过 Cargo 使用 rustdoc
 
@@ -98,7 +98,7 @@ dependency=<path>/docs/target/debug/deps
 
 ## 利用单独的 Markdown 文件
 
-`rustdoc` 可以为单独的 markdown 文件生成 HTML。让我们尝试一下，创建`README.md`，并输入如下内容
+`rustdoc` 可以为单独的 markdown 文件生成 HTML。让我们尝试一下，创建 `README.md`，并输入如下内容：
 
 ````text
 # Docs

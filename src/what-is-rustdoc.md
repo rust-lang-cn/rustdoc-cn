@@ -39,15 +39,15 @@ $ rustdoc src/lib.rs
 
 现在有两个问题：第一，为什么我们的包名字是“lib”？第二，为什么没有任何内容？
 
-第一个问题的原因是因为 `rustdoc` 试图更好用，像 `rustc` 就假定我们 crate 的名字就是 crate 根目录文件的名字。为了修复这个问题，可以通过命令行传递参数：
+第一个问题的原因是因为 `rustdoc` 试图更好用，像 `rustc`, 就假定我们 crate 的名字就是 crate 根目录文件的名字。为了修复这个问题，可以通过命令行传递参数：
 
 ```bash
 $ rustdoc src/lib.rs --crate-name docs
 ```
 
-现在，`doc/docs/index.html` 文件生成，页面名称为“Crate docs”。
+现在，将生成`doc/docs/index.html` 文件，页面名称为“Crate docs”。
 
-对于第二个问题，因为我们的函数 `foo` 不是公共的；`rustdoc` 默认只会为公共函数生成文档，如果我们将代码修改为
+对于第二个问题，因为我们的 `foo` 函数不是公共的；`rustdoc` 默认只会为公共函数生成文档，如果我们将代码修改为
 
 ```rust
 /// foo is a function
@@ -81,12 +81,12 @@ dependency=<path>/docs/target/debug/deps
 
 它会自动生成正确的 crate 名称 `--crate-name`，同时指向 `src/lib.rs`。但是其他的参数表示什么呢？
 
-- `-o` 控制文档的输出。不使用顶层的 `doc` 目录，Cargo 会把生成的文档生成在 `target`。这是 Cargo 项目的惯用生成文件的位置。
+- `-o` 控制文档的输出。请注意，Cargo 会把生成的文档放在`target`目录，而不是顶层的 `doc` 目录，。这是 Cargo 项目中生成文件的惯用位置。
 - `-L` 帮助 rustdoc 找到代码的依赖，如果我们的项目有依赖，也会生成依赖的文档。
 
 ## Outer 和 inner 文档
 
-`///` 语法用来对下面一个 item 生成文档，所以称为 outer 文档。还有语法`//!`，用来生成 item 内部的文档，也叫做 inner 文档，通常用来对整个 crate 生成文档，因为是 crate 的根，没有 item 在前面。所以为了生成整个 crate 的文档，你需要这样用 `//!`：
+`///` 语法用来对下面一个 item 生成文档，所以称为 outer 文档。还有另一种语法：`//!`，用来生成 item 内部的文档，叫做 inner 文档，通常用来对整个 crate 生成文档，因为是 crate 的根，没有 item 在前面。所以为了生成整个 crate 的文档，你需要使用 `//!`语法，例如：
 
 ```rust
 //! This is my first rust crate

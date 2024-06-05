@@ -1,6 +1,6 @@
 # 如何阅读 rustdoc 的输出
 
-Rustdoc 的 HTML 文件包含了有用的跳转入口，便于用户跳转理解你的代码。本章会覆盖入口的主要特性，同时也是良好的文档作者和用户的开端。
+Rustdoc 的 HTML 文件包含了一个友好且有用的导航界面，使用户可以更轻松地导航和理解您的代码。本章涵盖了该界面的主要功能，对于文档作者和用户来说都是一个很好的的开端。
 
 ## 结构
 
@@ -15,18 +15,18 @@ Rustdoc 的 HTML 文件包含了有用的跳转入口，便于用户跳转理解
 - item 的类型和名称，比如 "Struct `std::time::Duration`"；
 - 复制 crate 路径的按钮；
 - 展开和收起 item 顶层文档的按钮 (`[+]` or `[-]`)；
-- 如果 [configured](the-doc-attribute.html#html_no_source), 并且可以展示（如果文档创建通过 `cargo doc --no-deps` 源码可能是无效的），会有源码的连接 (`[src]`)；
+- 指向源代码 ([src]) 的链接如果[已配置](the-doc-attribute.html#html_no_source)并且存在，（如果通过 `cargo doc --no-deps` 创建文档）则源码可能无效；
 - 如果 item 是标准库，会展示 item 稳定的版本。
 
-下面是 item 的主要文档，包括函数签名，Rust 类型的 fields 列表或者 variants。最后页面列出关联的函数以及 trait 实现，包括 `rustdoc` 知道的自动和空白实现。
+下面是 item 的主要文档，包括函数签名，Rust 类型的 fields 列表或者 variants。最后，该页面列出了关联函数以及 trait 实现，包括 `rustdoc` 知道的自动和空白实现。
 
 ### 导航
 
-subheadings，variants，fields 和文档中很多元素都是锚，可以被链接，这是可以准确传递你表达的好方法。当悬停或给定键盘焦点时，印刷符号 "§" 出现在带有锚点的行旁边。
+subheadings，variants，fields 和文档中很多元素都是锚，可以被链接，这是可以准确传递你表达的好方法。当鼠标悬停或给定键盘焦点时，印刷符号 "§" 出现在带有锚点的行旁边。
 
 ## 导航栏
 
-比如，当查看 crate 根文档的时候，会展示所有的 crate 文档的 modules，structs，traits，functions，macros 的快速链接。顶部，在当前 crate 名称和版本旁边或者当前 item 旁边展示 [configurable logo](the-doc-attribute.html#html_logo_url)。
+比如，当查看 crate 根文档的时候，会展示所有的 crate 文档的 modules，structs，traits，functions，macros 的快速链接。在顶部，它会在当前 crate 名称和版本旁边或者当前 item 旁边展示 [configurable logo](the-doc-attribute.html#html_logo_url)。
 
 ## 主题选择和搜索栏
 
